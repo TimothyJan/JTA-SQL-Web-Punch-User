@@ -1,1 +1,74 @@
 /* You can add global styles to this file, and also import other style files */
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+
+body, html {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #F0F8FF;
+  color: #444452;
+  font-family: Apercu,"Source Sans Pro",system,system-ui,-apple-system,BlinkMacSystemFont,Roboto,Helvetica,Arial,sans-serif;
+  line-height: 1.5;
+}
+
+:root {
+  --sidenav-width: 300px;
+}
+
+.flex-container {
+  display: flex;
+  flex-flow: row wrap;
+  /* justify-content: space-around; */
+  justify-content: center;
+  column-gap: 5%;
+}
+
+/* @media screen and (max-width: 790px) {
+  .flex-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    column-gap: 10px;
+  }
+} */
+
+.flex-item {
+  padding: 1%;
+  /* padding-left: 5%; */
+}
+
+mat-card {
+  display: flex;
+  justify-content: center;
+  padding-top: 2.5%;
+  padding-right: 2.5%;
+  padding-left: 2.5%;
+  padding-bottom: 5%;
+  width: 100%;
+}
+
+mat-card-header {
+  background: #3366CC;
+}
+
+mat-card-title {
+  color: white;
+}
+
+.title-center {
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align vertical */
+}
+
+mat-label {
+  padding-right: 10px;
+  font-weight: bold;
+}
+
+mat-form-field {
+  /* width:210px; */
+  margin-bottom: -1.25em;
+  padding-bottom: 2%;
+}

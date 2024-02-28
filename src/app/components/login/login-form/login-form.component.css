@@ -1,0 +1,28 @@
+.flex-item {
+  padding: 1%;
+  padding-left: 0%;
+}
+
+mat-card {
+  width:380px;
+  height: auto;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+button {
+  width: 100%;
+}
+
+.login {
+  display: flex;
+  justify-content: flex-start;
+  padding: 5%;
+  /* width: 400px; */
+}
+
+p {
+  font-size:x-small;
+}

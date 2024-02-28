@@ -1,0 +1,21 @@
+.logo img{
+  margin: auto;
+  display: flex;
+  justify-content:center;
+  align-items:center;
+  padding-top: 2%;
+  width: 80%;
+}
+
+.header-text {
+  text-align: center;
+  margin: auto;
+}
+
+h2 {
+  margin-bottom: 0px;
+}
+
+p {
+  margin: 0px;
+}

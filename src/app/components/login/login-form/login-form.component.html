@@ -1,0 +1,65 @@
+<mat-card class="login">
+
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <div [ngSwitch]="logintype">
+
+      <div *ngSwitchCase="1">
+        <mat-form-field>
+          <mat-label>Employee #</mat-label>
+          <input matInput formControlName="employeeNumber">
+        </mat-form-field>
+        <div *ngIf="(loginForm.controls['employeeNumber'].dirty || loginForm.controls['employeeNumber'].touched)" class="alert-danger">
+          <div *ngIf="loginForm.controls['employeeNumber'].errors?.['required']">
+            <mat-error>Please enter your Employee Number</mat-error>
+          </div>
+        </div>
+
+        <mat-form-field>
+          <mat-label>Card Number</mat-label>
+          <input matInput formControlName="cardNumber">
+        </mat-form-field>
+        <div *ngIf="(loginForm.controls['cardNumber'].dirty || loginForm.controls['cardNumber'].touched)" class="alert-danger">
+          <div *ngIf="loginForm.controls['cardNumber'].errors?.['required']">
+            <mat-error>Please enter your Card Number</mat-error>
+          </div>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="2">
+        <mat-form-field>
+          <mat-label>Employee #</mat-label>
+          <input matInput formControlName="employeeNumber">
+        </mat-form-field>
+        <div *ngIf="(loginForm.controls['employeeNumber'].dirty || loginForm.controls['employeeNumber'].touched)" class="alert-danger">
+          <div *ngIf="loginForm.controls['employeeNumber'].errors?.['required']">
+            <mat-error>Please enter your Employee Number</mat-error>
+          </div>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="3">
+        <mat-form-field>
+          <mat-label>Card Number</mat-label>
+          <input matInput formControlName="cardNumber">
+        </mat-form-field>
+        <div *ngIf="(loginForm.controls['cardNumber'].dirty || loginForm.controls['cardNumber'].touched)" class="alert-danger">
+          <div *ngIf="loginForm.controls['cardNumber'].errors?.['required']">
+            <mat-error>Please enter your Card Number</mat-error>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br>
+
+    <button
+      mat-raised-button
+      type="submit"
+      color="primary">
+      Login
+    </button>
+
+    <p>Jantek Web Punch is a product of JANTEK ELECTRONICS INC.</p>
+  </form>
+
+</mat-card>
