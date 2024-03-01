@@ -1,1 +1,63 @@
-<p>punch-screen works!</p>
+
+<mat-card>
+  <mat-card-header class="title-center">
+    <mat-card-title>Punch Screen</mat-card-title>
+  </mat-card-header>
+
+  <form [formGroup]="punchForm">
+
+    <app-date-time></app-date-time>
+
+    <div class="flex-container" *ngIf="isAdmin">
+      <div class="flex-item">
+        <mat-label>User</mat-label>
+        <br>
+        <mat-form-field>
+          <input matInput formControlName="user">
+        </mat-form-field>
+        <div *ngIf="(punchForm.controls['user'].dirty || punchForm.controls['user'].touched)">
+          <div *ngIf="punchForm.controls['user'].errors?.['required']">
+            <mat-error>User is required.</mat-error>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div [ngSwitch]="clocktype">
+      <div *ngSwitchCase="'In and Out'">
+        <div class="flex-container">
+          <div class="flex-item">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="onPunchIn()">
+                Punch In
+              </button>
+          </div>
+          <div class="flex-item">
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="onPunchOut()">
+                Punch Out
+              </button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngSwitchCase="'Swipe and Go'">
+        <div class="flex-container">
+          <div class="flex-item punch-button">
+            <button
+              mat-raised-button
+              color="primary"
+              (click)="onPunchSwipeAndGo()">
+                Punch
+              </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</mat-card>
+

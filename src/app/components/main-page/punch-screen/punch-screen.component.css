@@ -1,0 +1,19 @@
+.flex-container {
+  display: flex;
+  flex-flow: row wrap;
+  /* justify-content: space-around; */
+  justify-content: center;
+  column-gap: 5%;
+}
+
+.flex-item {
+  padding: 1%;
+  padding-left: 0%;
+}
+
+button{
+  margin-right: 1vw;
+  background: #4285F4;
+  color: white;
+  width: 210px;
+}

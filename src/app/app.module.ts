@@ -23,6 +23,7 @@ import { FunctionKey4Component } from './components/main-page/function-key-4/fun
 import { FunctionKey5Component } from './components/main-page/function-key-5/function-key-5.component';
 import { FunctionKey6Component } from './components/main-page/function-key-6/function-key-6.component';
 import { PunchScreenComponent } from './components/main-page/punch-screen/punch-screen.component';
+import { DateTimeComponent } from './components/date-time/date-time.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { PunchScreenComponent } from './components/main-page/punch-screen/punch-
     FunctionKey5Component,
     FunctionKey6Component,
     PunchScreenComponent,
+    DateTimeComponent,
   ],
   imports: [
     BrowserModule,
