@@ -1,0 +1,23 @@
+<mat-toolbar color="secondary">
+  <!-- <span> -->
+    <div class = "logo">
+      <img src="assets/images/Jantek-Logo.png" alt="Jantek-Logo">
+    </div>
+  <!-- </span> -->
+
+  <button mat-icon-button (click)="toggleSidenav()">
+    <mat-icon>menu</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="over" position="end" [opened]="isSidenavOpen" (openedChange)="isSidenavOpen = $event">
+    <mat-nav-list>
+      <a mat-list-item *ngFor="let link of navLinks" [routerLink]="link.path" (click)="toggleSidenav()">{{ link.label }}</a>
+      <a mat-list-item (click)="logoff()">Logoff</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

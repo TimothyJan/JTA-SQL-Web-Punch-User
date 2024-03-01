@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainPageComponent } from './main-page.component';
+import { FunctionKey1Component } from './function-key-1.component';
 
-describe('MainPageComponent', () => {
-  let component: MainPageComponent;
-  let fixture: ComponentFixture<MainPageComponent>;
+describe('FunctionKey1Component', () => {
+  let component: FunctionKey1Component;
+  let fixture: ComponentFixture<FunctionKey1Component>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MainPageComponent]
+      declarations: [FunctionKey1Component]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(MainPageComponent);
+    fixture = TestBed.createComponent(FunctionKey1Component);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -12,20 +12,34 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { OrganizerComponent } from './components/organizer/organizer.component';
 import { LoginComponent } from './components/login/login.component';
-import { FunctionKeyListComponent } from './components/function-key-list/function-key-list.component';
 import { LoginFormComponent } from './components/login/login-form/login-form.component';
 import { LogoWelcomeComponent } from './components/login/logo-welcome/logo-welcome.component';
-import { MainPageComponent } from './components/main-page/main-page.component';
+import { NavBarComponent } from './components/main-page/nav-bar/nav-bar.component';
+import { FunctionKeyComponent } from './components/main-page/function-key/function-key.component';
+import { FunctionKey1Component } from './components/main-page/function-key-1/function-key-1.component';
+import { FunctionKey2Component } from './components/main-page/function-key-2/function-key-2.component';
+import { FunctionKey3Component } from './components/main-page/function-key-3/function-key-3.component';
+import { FunctionKey4Component } from './components/main-page/function-key-4/function-key-4.component';
+import { FunctionKey5Component } from './components/main-page/function-key-5/function-key-5.component';
+import { FunctionKey6Component } from './components/main-page/function-key-6/function-key-6.component';
+import { PunchScreenComponent } from './components/main-page/punch-screen/punch-screen.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     OrganizerComponent,
     LoginComponent,
-    FunctionKeyListComponent,
     LoginFormComponent,
     LogoWelcomeComponent,
-    MainPageComponent,
+    NavBarComponent,
+    FunctionKeyComponent,
+    FunctionKey1Component,
+    FunctionKey2Component,
+    FunctionKey3Component,
+    FunctionKey4Component,
+    FunctionKey5Component,
+    FunctionKey6Component,
+    PunchScreenComponent,
   ],
   imports: [
     BrowserModule,

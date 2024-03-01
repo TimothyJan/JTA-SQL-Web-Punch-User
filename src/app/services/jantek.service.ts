@@ -3,6 +3,7 @@ import { AlertService } from './alert.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { PunchConfig } from '../models/punch-config';
+import { FunctionKey } from '../models/function-key';
 
 const apiRoot = "http://201.12.20.40/timothy_jan/sqlwebpunch";
 
@@ -118,6 +119,36 @@ export class JantekService {
   /** Returns current Clock Type */
   getClockType(): number {
     return this.punchConfiguration.clocktype;
+  }
+
+  /** Returns fk1 */
+  getFK1(): FunctionKey {
+    return this.punchConfiguration.fk1;
+  }
+
+  /** Returns fk2 */
+  getFK2(): FunctionKey {
+    return this.punchConfiguration.fk2;
+  }
+
+  /** Returns fk3 */
+  getFK3(): FunctionKey {
+    return this.punchConfiguration.fk3;
+  }
+
+  /** Returns fk4 */
+  getFK4(): FunctionKey {
+    return this.punchConfiguration.fk4;
+  }
+
+  /** Returns fk5 */
+  getFK5(): FunctionKey {
+    return this.punchConfiguration.fk5;
+  }
+
+  /** Returns fk6 */
+  getFK6(): FunctionKey {
+    return this.punchConfiguration.fk6;
   }
 
 }

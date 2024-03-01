@@ -1,0 +1,33 @@
+.logo img{
+  /* margin: auto; */
+  padding-left: 2.5%;
+  display: flex;
+  justify-content:start;
+  align-items:start;
+  height:50px;
+}
+
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navbar-link {
+  cursor: pointer;
+  margin: 0 12px;
+  text-decoration: underline;
+  font-size:medium;
+}
+
+.sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav {
+  width: 200px;
+}
+
+a {
+  border-bottom: 1px solid #ddd !important;
+}
+

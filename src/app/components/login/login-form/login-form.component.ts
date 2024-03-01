@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { JantekService } from '../../../services/jantek.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -15,7 +16,8 @@ export class LoginFormComponent implements OnInit {
   });
 
   constructor(
-    private _jantekService: JantekService
+    private _jantekService: JantekService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +45,7 @@ export class LoginFormComponent implements OnInit {
     if (this.loginForm.valid) {
       console.log(this.loginForm.value);
       this._jantekService.login(this.loginForm.value);
+      this.router.navigate(["punch-screen"]);
     }
     this.loginForm.reset();
   }

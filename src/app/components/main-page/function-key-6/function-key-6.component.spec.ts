@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FunctionKeyListComponent } from './function-key-list.component';
+import { FunctionKey6Component } from './function-key-6.component';
 
-describe('FunctionKeyListComponent', () => {
-  let component: FunctionKeyListComponent;
-  let fixture: ComponentFixture<FunctionKeyListComponent>;
+describe('FunctionKey6Component', () => {
+  let component: FunctionKey6Component;
+  let fixture: ComponentFixture<FunctionKey6Component>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FunctionKeyListComponent]
+      declarations: [FunctionKey6Component]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(FunctionKeyListComponent);
+    fixture = TestBed.createComponent(FunctionKey6Component);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
