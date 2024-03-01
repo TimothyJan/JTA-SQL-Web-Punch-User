@@ -116,7 +116,7 @@ export class JantekService {
     if(form.employeeNumber == this.demoEmployeeNumber && form.cardNumber == this.demoCardNumber) {
       this.isAuthenticatedChange.next(true);
       this._alertService.openSnackBar("Login Successful");
-      // get punch configuration
+      /** get punch configuration */
       // this.getPunchConfiguration().subscribe(
       //   data => this.punchConfiguration = { ...data}
       // );

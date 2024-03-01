@@ -1,1 +1,59 @@
 <p>function-key {{ functionKeyNumber }} works!</p>
+
+<div [ngSwitch]="fktype">
+  <div *ngSwitchCase="4">
+    <app-level-change></app-level-change>
+  </div>
+  <div *ngSwitchCase="5">
+    <app-level-change></app-level-change>
+  </div>
+  <div *ngSwitchCase="6">
+    <app-level-change></app-level-change>
+  </div>
+  <div *ngSwitchCase="7">
+    <app-level-change></app-level-change>
+  </div>
+  <div *ngSwitchCase="8">
+    <app-level-change></app-level-change>
+  </div>
+  <div *ngSwitchCase="9">
+    <app-level-change></app-level-change>
+  </div>
+  <div *ngSwitchCase="10">
+    <app-level-change></app-level-change>
+  </div>
+  <div *ngSwitchCase="11">
+    <app-level-change></app-level-change>
+  </div>
+  <div *ngSwitchCase="12">
+    <app-break-lunch></app-break-lunch>
+  </div>
+  <div *ngSwitchCase="13">
+    <app-break-lunch></app-break-lunch>
+  </div>
+  <div *ngSwitchCase="14">
+    <app-break-lunch></app-break-lunch>
+  </div>
+  <div *ngSwitchCase="15">
+    <app-break-lunch></app-break-lunch>
+  </div>
+  <div *ngSwitchCase="16">
+    <app-hour-amount-pc></app-hour-amount-pc>
+  </div>
+  <div *ngSwitchCase="17">
+    <app-hour-amount-pc></app-hour-amount-pc>
+  </div>
+  <div *ngSwitchCase="18">
+    <app-view-last-punch></app-view-last-punch>
+  </div>
+  <div *ngSwitchCase="19">
+    <app-view-total-hours></app-view-total-hours>
+  </div>
+  <div *ngSwitchCase="20">
+    <app-hour-amount-pc></app-hour-amount-pc>
+  </div>
+
+  <div *ngSwitchDefault>
+    <app-punch-screen></app-punch-screen>
+  </div>
+</div>

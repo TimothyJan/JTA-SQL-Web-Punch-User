@@ -22,8 +22,13 @@ import { FunctionKey3Component } from './components/main-page/function-key-3/fun
 import { FunctionKey4Component } from './components/main-page/function-key-4/function-key-4.component';
 import { FunctionKey5Component } from './components/main-page/function-key-5/function-key-5.component';
 import { FunctionKey6Component } from './components/main-page/function-key-6/function-key-6.component';
-import { PunchScreenComponent } from './components/main-page/punch-screen/punch-screen.component';
+import { PunchScreenComponent } from './components/fk-components/punch-screen/punch-screen.component';
 import { DateTimeComponent } from './components/date-time/date-time.component';
+import { LevelChangeComponent } from './components/fk-components/level-change/level-change.component';
+import { ViewLastPunchComponent } from './components/fk-components/view-last-punch/view-last-punch.component';
+import { ViewTotalHoursComponent } from './components/fk-components/view-total-hours/view-total-hours.component';
+import { BreakLunchComponent } from './components/fk-components/break-lunch/break-lunch.component';
+import { HourAmountPcComponent } from './components/fk-components/hour-amount-pc/hour-amount-pc.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +47,11 @@ import { DateTimeComponent } from './components/date-time/date-time.component';
     FunctionKey6Component,
     PunchScreenComponent,
     DateTimeComponent,
+    LevelChangeComponent,
+    ViewLastPunchComponent,
+    ViewTotalHoursComponent,
+    BreakLunchComponent,
+    HourAmountPcComponent
   ],
   imports: [
     BrowserModule,

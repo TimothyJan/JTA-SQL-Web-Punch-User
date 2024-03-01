@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FunctionKey } from '../../../models/function-key';
 
 @Component({
@@ -6,7 +6,7 @@ import { FunctionKey } from '../../../models/function-key';
   templateUrl: './function-key.component.html',
   styleUrl: './function-key.component.css'
 })
-export class FunctionKeyComponent {
+export class FunctionKeyComponent implements OnInit{
   @Input() functionKeyNumber: number = 0;
   @Input() fk:FunctionKey = {
     "fktype": 1,
@@ -16,5 +16,10 @@ export class FunctionKeyComponent {
     "msg3": "",
     "PC": 0
   };
+  fktype: number = 0;
+
+  ngOnInit(): void {
+    this.fktype = this.fk["fktype"];
+  }
 
 }

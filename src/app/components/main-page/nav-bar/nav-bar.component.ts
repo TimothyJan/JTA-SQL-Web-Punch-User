@@ -8,15 +8,7 @@ import { JantekService } from '../../../services/jantek.service';
   styleUrl: './nav-bar.component.css'
 })
 export class NavBarComponent {
-  navLinks = [
-    { path: '/punch-screen', label: 'Punch Screen' },
-    { path: '/function-key-1', label: 'Function Key 1' },
-    { path: '/function-key-2', label: 'Function Key 2' },
-    { path: '/function-key-3', label: 'Function Key 3' },
-    { path: '/function-key-4', label: 'Function Key 4' },
-    { path: '/function-key-5', label: 'Function Key 5' },
-    { path: '/function-key-6', label: 'Function Key 6' }
-  ];
+  navLinks: any[] = [];
   // Sidenav toggle flag
   isSidenavOpen:boolean = false;
 
@@ -27,6 +19,20 @@ export class NavBarComponent {
 
   ngOnInit(): void {
     this._jantekService.getPunchConfiguration();
+    this.getFunctionKeyLabels();
+  }
+
+  getFunctionKeyLabels() {
+    console.log(this._jantekService.punchConfiguration.fk1.caption);
+    this.navLinks = [
+      { path: '/punch-screen', label: 'Punch Screen' },
+      { path: '/function-key-1', label: this._jantekService.punchConfiguration.fk1.caption },
+      { path: '/function-key-2', label: this._jantekService.punchConfiguration.fk2.caption },
+      { path: '/function-key-3', label: this._jantekService.punchConfiguration.fk3.caption },
+      { path: '/function-key-4', label: this._jantekService.punchConfiguration.fk4.caption },
+      { path: '/function-key-5', label: this._jantekService.punchConfiguration.fk5.caption },
+      { path: '/function-key-6', label: this._jantekService.punchConfiguration.fk6.caption }
+    ];
   }
 
   closeSideNav() {

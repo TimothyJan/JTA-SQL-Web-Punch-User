@@ -7,7 +7,7 @@ import { FunctionKey3Component } from './components/main-page/function-key-3/fun
 import { FunctionKey4Component } from './components/main-page/function-key-4/function-key-4.component';
 import { FunctionKey5Component } from './components/main-page/function-key-5/function-key-5.component';
 import { FunctionKey6Component } from './components/main-page/function-key-6/function-key-6.component';
-import { PunchScreenComponent } from './components/main-page/punch-screen/punch-screen.component';
+import { PunchScreenComponent } from './components/fk-components/punch-screen/punch-screen.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
