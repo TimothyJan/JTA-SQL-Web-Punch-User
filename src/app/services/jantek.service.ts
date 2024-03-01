@@ -45,50 +45,50 @@ export class JantekService {
     "breaklock": 0,
     "breaklen": 0,
     "fk1": {
-      "fktype": 18,
-      "caption": "View Last Punch",
-      "msg1": "",
+      "fktype": 4,
+      "caption": "Swipe and Go and Level 3",
+      "msg1": "Enter Level 3",
       "msg2": "",
       "msg3": "",
       "PC": 0
     },
     "fk2": {
-      "fktype": 19,
-      "caption": "View Total Hour",
-      "msg1": "",
+      "fktype": 5,
+      "caption": "Level 1 Change",
+      "msg1": "Enter Level 1",
       "msg2": "",
       "msg3": "",
       "PC": 0
     },
     "fk3": {
-      "fktype": 5,
-      "caption": "Company Change",
-      "msg1": "Enter Company",
+      "fktype": 6,
+      "caption": "Level 2 Change",
+      "msg1": "Enter Level 2",
       "msg2": "",
       "msg3": "",
       "PC": 0
     },
     "fk4": {
-      "fktype": 6,
-      "caption": "Branch Change",
-      "msg1": "Enter Branch",
+      "fktype": 7,
+      "caption": "Level 3 Change",
+      "msg1": "Enter Level 3",
       "msg2": "",
       "msg3": "",
       "PC": 0
     },
     "fk5": {
-      "fktype": 7,
-      "caption": "Dept Change",
-      "msg1": "Enter Department",
-      "msg2": "",
+      "fktype": 8,
+      "caption": "Level 1/2 Change",
+      "msg1": "Enter Level 1",
+      "msg2": "Enter Level 2",
       "msg3": "",
       "PC": 0
     },
     "fk6": {
-      "fktype": 17,
-      "caption": "Tip Entry",
-      "msg1": "Enter Tip",
-      "msg2": "",
+      "fktype": 9,
+      "caption": "Enter Level 1/3 Change",
+      "msg1": "Enter Level 1",
+      "msg2": "Enter Level 3",
       "msg3": "",
       "PC": 7
     }
@@ -101,17 +101,15 @@ export class JantekService {
     private http: HttpClient
   ) { }
 
-  /** INCOMPLETE */
   /** Https request to get punch configuration from server */
-  getPunchConfiguration(): Observable<PunchConfig> {
-    return this.http.get<PunchConfig>(`${apiRoot}/swp_getpunchcfg.asp`);
+  getPunchConfiguration() { //: Observable<PunchConfig> {
+    // return this.http.get<PunchConfig>(`${apiRoot}/swp_getpunchcfg.asp`);
+    /** TESTING */
+    return this.punchConfiguration;
+    /** --TESTING */
   }
 
-  /** Return current Login Type */
-  getLoginType(): number {
-    return this.punchConfiguration.logintype;
-  }
-
+  /** TESTING */
   /** Check user in database and login*/
   login(form: any): boolean {
     // Admin Authentication
@@ -119,13 +117,22 @@ export class JantekService {
       this.isAuthenticatedChange.next(true);
       this._alertService.openSnackBar("Login Successful");
       // get punch configuration
-      this.getPunchConfiguration().subscribe(
-        data => this.punchConfiguration = { ...data}
-      );
+      // this.getPunchConfiguration().subscribe(
+      //   data => this.punchConfiguration = { ...data}
+      // );
+
+      /** Testing */
+      this.getPunchConfiguration();
+      /** -Testing */
       return true;
     }
     this._alertService.openSnackBar("Incorrect Login");
     return false;
+  }
+
+  /** Return current Login Type */
+  getLoginType(): number {
+    return this.punchConfiguration.logintype;
   }
 
   /** Log Off */

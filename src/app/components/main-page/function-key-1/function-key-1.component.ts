@@ -23,5 +23,7 @@ export class FunctionKey1Component implements OnInit{
 
   ngOnInit(): void {
     this.fk1 = this._jantekService.getFK1();
+    console.log(this._jantekService.punchConfiguration);
+
   }
 }
