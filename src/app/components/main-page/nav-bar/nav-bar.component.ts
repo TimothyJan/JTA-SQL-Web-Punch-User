@@ -23,7 +23,6 @@ export class NavBarComponent {
   }
 
   getFunctionKeyLabels() {
-    console.log(this._jantekService.punchConfiguration.fk1.caption);
     this.navLinks = [
       { path: '/punch-screen', label: 'Punch Screen' },
       { path: '/function-key-1', label: this._jantekService.punchConfiguration.fk1.caption },

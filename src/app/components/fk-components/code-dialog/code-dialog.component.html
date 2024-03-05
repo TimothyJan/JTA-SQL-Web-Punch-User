@@ -1,0 +1,25 @@
+
+<mat-card>
+
+  <mat-card-header class="title-center">
+    <mat-card-title>Code List</mat-card-title>
+  </mat-card-header>
+
+  <mat-dialog-content>
+    <div *ngIf="codeList; else payCodeLoadingBlock">
+      <mat-selection-list #codes [multiple]="false" [(ngModel)]="codeSelected">
+        <mat-list-option *ngFor="let codeNum of codeNumList, let i = index" [selected]="i==0" [value]="codeNum">
+          {{ codeNum }} - {{ codeList[i].description }}
+        </mat-list-option>
+      </mat-selection-list>
+    </div>
+    <ng-template #payCodeLoadingBlock>
+      Loading...
+    </ng-template>
+  </mat-dialog-content>
+
+  <button mat-raised-button type="submit" color="primary" (click)="savePayCodeDialog()">Save</button>
+  <button mat-raised-button type="button" color="primary" (click)="closePayCodeDialog()">Close</button>
+
+</mat-card>
+

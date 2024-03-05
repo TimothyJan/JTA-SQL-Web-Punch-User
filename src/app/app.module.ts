@@ -29,6 +29,7 @@ import { ViewLastPunchComponent } from './components/fk-components/view-last-pun
 import { ViewTotalHoursComponent } from './components/fk-components/view-total-hours/view-total-hours.component';
 import { BreakLunchComponent } from './components/fk-components/break-lunch/break-lunch.component';
 import { HourAmountPcComponent } from './components/fk-components/hour-amount-pc/hour-amount-pc.component';
+import { CodeDialogComponent } from './components/fk-components/code-dialog/code-dialog.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { HourAmountPcComponent } from './components/fk-components/hour-amount-pc
     ViewLastPunchComponent,
     ViewTotalHoursComponent,
     BreakLunchComponent,
-    HourAmountPcComponent
+    HourAmountPcComponent,
+    CodeDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -14,17 +14,18 @@
           <input matInput formControlName="msg1Input">
         </mat-form-field>
 
-        <!-- <button
+        <button
           *ngIf="!msg1Disabled"
           mat-icon-button color="primary"
           type="button"
           (click)="openCodeMsg1Dialog()"
           aria-label="Msg Code 1 Search">
           <mat-icon>search</mat-icon>
-        </button> -->
+        </button>
+
         <div *ngIf="(levelChangeForm.controls['msg1Input'].dirty || levelChangeForm.controls['msg1Input'].touched)">
           <div *ngIf="levelChangeForm.controls['msg1Input'].errors?.['required']">
-            <mat-error>Message #1 is required.</mat-error>
+            <mat-error>{{ level1Label }} is required.</mat-error>
           </div>
         </div>
       </div>
@@ -38,17 +39,19 @@
         <mat-form-field>
           <input matInput formControlName="msg2Input">
         </mat-form-field>
-        <!-- <button
+
+        <button
           *ngIf="!msg2Disabled"
           mat-icon-button color="primary"
           type="button"
           (click)="openCodeMsg2Dialog()"
           aria-label="Msg Code 2 Search">
           <mat-icon>search</mat-icon>
-        </button> -->
+        </button>
+
         <div *ngIf="(levelChangeForm.controls['msg2Input'].dirty || levelChangeForm.controls['msg2Input'].touched)">
           <div *ngIf="levelChangeForm.controls['msg2Input'].errors?.['required']">
-            <mat-error>Message #2 is required.</mat-error>
+            <mat-error>{{ level2Label }} is required.</mat-error>
           </div>
         </div>
       </div>
@@ -62,17 +65,19 @@
         <mat-form-field>
           <input matInput formControlName="msg3Input">
         </mat-form-field>
-        <!-- <button
+
+        <button
           *ngIf="!msg3Disabled"
           mat-icon-button color="primary"
           type="button"
           (click)="openCodeMsg3Dialog()"
           aria-label="Msg Code 3 Search">
           <mat-icon>search</mat-icon>
-        </button> -->
+        </button>
+
         <div *ngIf="(levelChangeForm.controls['msg3Input'].dirty || levelChangeForm.controls['msg3Input'].touched)">
           <div *ngIf="levelChangeForm.controls['msg3Input'].errors?.['required']">
-            <mat-error>Message #3 is required.</mat-error>
+            <mat-error>{{ level3Label }} is required.</mat-error>
           </div>
         </div>
       </div>

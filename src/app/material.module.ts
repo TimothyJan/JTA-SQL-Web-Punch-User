@@ -25,7 +25,8 @@ const modules = [
   MatToolbarModule,
   MatSidenavModule,
   MatListModule,
-  MatIconModule
+  MatIconModule,
+  MatDialogModule
 ];
 
 @NgModule({

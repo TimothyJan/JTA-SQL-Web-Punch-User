@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { PunchConfig } from '../models/punch-config';
 import { FunctionKey } from '../models/function-key';
 import { CompanyInfo } from '../models/company-info';
+import { CodeList } from '../models/code-list';
 
 const apiRoot = "http://201.12.20.40/timothy_jan/sqlwebpunch";
 
@@ -195,11 +196,17 @@ export class JantekService {
     return this.companyInfo.timeformat;
   }
 
+  /** Returns level 1 label */
+  getLevel1Label(): string {
+    return this.companyInfo.lvl1label;
+  }
 
-  /** Punch In/Out/SwipeAndGo */
-  punch(form: any) {
-    console.log(form);
-    this._alertService.openSnackBar("Punch Recorded!");
+  getLevel2Label(): string {
+    return this.companyInfo.lvl2label;
+  }
+
+  getLevel3Label(): string {
+    return this.companyInfo.lvl3label;
   }
 
   getFunctionKeyInfo(functionKeyNumber: number): FunctionKey {
@@ -219,6 +226,51 @@ export class JantekService {
       default:
         return this.punchConfiguration.fk1;
     }
+  }
+
+  /** Punch In/Out/SwipeAndGo */
+  punch(form: any) {
+    console.log(form);
+    this._alertService.openSnackBar("Punch Recorded!");
+  }
+
+  /** Https request to get list of level 1 codes */
+  getLevel1Codes(): Observable<CodeList> {
+    const options = {
+      params: {
+        Company: "TIMOTHYPROJECT",
+        order:1,
+        startloc:1,
+        listsize:100
+      }
+    };
+    return this.http.get<CodeList>(`${apiRoot}/swp_GetL1List.asp`, options);
+  }
+
+  /** Https request to get list of level 1 codes */
+  getLevel2Codes(): Observable<CodeList> {
+    const options = {
+      params: {
+        Company: "TIMOTHYPROJECT",
+        order:1,
+        startloc:1,
+        listsize:100
+      }
+    };
+    return this.http.get<CodeList>(`${apiRoot}/swp_GetL2List.asp`, options);
+  }
+
+  /** Https request to get list of level 1 codes */
+  getLevel3Codes(): Observable<CodeList> {
+    const options = {
+      params: {
+        Company: "TIMOTHYPROJECT",
+        order:1,
+        startloc:1,
+        listsize:100
+      }
+    };
+    return this.http.get<CodeList>(`${apiRoot}/swp_GetL3List.asp`, options);
   }
 
   levelChangeUpdate(form: any) {
