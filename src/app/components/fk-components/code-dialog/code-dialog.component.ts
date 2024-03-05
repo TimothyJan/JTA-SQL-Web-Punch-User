@@ -95,6 +95,11 @@ export class CodeDialogComponent implements OnInit {
 
   /** Close dialog and sends previous code input as selction */
   closePayCodeDialog(): void {
-    this._dialogRef.close(this.data.currentCode);
+    if (this.data.currentCode) {
+      this._dialogRef.close(this.data.currentCode);
+    }
+    else {
+      this._dialogRef.close(0);
+    }
   }
 }

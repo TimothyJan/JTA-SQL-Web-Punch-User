@@ -46,6 +46,14 @@ export class JantekService {
     "breaklock": 0,
     "breaklen": 0,
     "fk1": {
+      "fktype": 18,
+      "caption": "View Last Punch",
+      "msg1": "",
+      "msg2": "",
+      "msg3": "",
+      "PC": 0
+    },
+    "fk2": {
       "fktype": 4,
       "caption": "Swipe and Go and Level 3",
       "msg1": "Enter Level 3",
@@ -53,20 +61,12 @@ export class JantekService {
       "msg3": "",
       "PC": 0
     },
-    "fk2": {
-      "fktype": 5,
-      "caption": "Level 1 Change",
-      "msg1": "Enter Level 1",
-      "msg2": "",
-      "msg3": "",
-      "PC": 0
-    },
     "fk3": {
-      "fktype": 6,
-      "caption": "Level 2 Change",
-      "msg1": "Enter Level 2",
-      "msg2": "",
-      "msg3": "",
+      "fktype": 11,
+      "caption": "Level 1/2/3 Change",
+      "msg1": "Enter Level 1",
+      "msg2": "Enter Level 2",
+      "msg3": "Enter Level 3",
       "PC": 0
     },
     "fk4": {
@@ -87,7 +87,7 @@ export class JantekService {
     },
     "fk6": {
       "fktype": 9,
-      "caption": "Enter Level 1/3 Change",
+      "caption": "Level 1/3 Change",
       "msg1": "Enter Level 1",
       "msg2": "Enter Level 3",
       "msg3": "",
