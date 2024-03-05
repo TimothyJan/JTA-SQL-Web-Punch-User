@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FunctionKey } from '../../../models/function-key';
+import { JantekService } from '../../../services/jantek.service';
 
 @Component({
   selector: 'app-function-key',
@@ -8,18 +9,14 @@ import { FunctionKey } from '../../../models/function-key';
 })
 export class FunctionKeyComponent implements OnInit{
   @Input() functionKeyNumber: number = 0;
-  @Input() fk:FunctionKey = {
-    "fktype": 1,
-    "caption": "",
-    "msg1": "",
-    "msg2": "",
-    "msg3": "",
-    "PC": 0
-  };
   fktype: number = 0;
 
+  constructor(
+    private _jantekService: JantekService
+  ) {}
+
   ngOnInit(): void {
-    this.fktype = this.fk["fktype"];
+    this.fktype = this._jantekService.getFunctionKeyInfo(this.functionKeyNumber).fktype;
   }
 
 }
