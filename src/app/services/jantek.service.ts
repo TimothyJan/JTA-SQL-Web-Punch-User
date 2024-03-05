@@ -94,7 +94,7 @@ export class JantekService {
     }
   };
 
-  /** DEMO ONLY */
+  /** -DEMO ONLY */
 
   constructor(
     private _alertService: AlertService,
@@ -202,34 +202,28 @@ export class JantekService {
     this._alertService.openSnackBar("Punch Recorded!");
   }
 
-  /** Returns fk1 */
-  getFK1(): FunctionKey {
-    return this.punchConfiguration.fk1;
+  getFunctionKeyInfo(functionKeyNumber: number): FunctionKey {
+    switch(functionKeyNumber) {
+      case 1:
+        return this.punchConfiguration.fk1;
+      case 2:
+        return this.punchConfiguration.fk2;
+      case 3:
+        return this.punchConfiguration.fk3;
+      case 4:
+        return this.punchConfiguration.fk4;
+      case 5:
+        return this.punchConfiguration.fk5;
+      case 6:
+        return this.punchConfiguration.fk6;
+      default:
+        return this.punchConfiguration.fk1;
+    }
   }
 
-  /** Returns fk2 */
-  getFK2(): FunctionKey {
-    return this.punchConfiguration.fk2;
-  }
-
-  /** Returns fk3 */
-  getFK3(): FunctionKey {
-    return this.punchConfiguration.fk3;
-  }
-
-  /** Returns fk4 */
-  getFK4(): FunctionKey {
-    return this.punchConfiguration.fk4;
-  }
-
-  /** Returns fk5 */
-  getFK5(): FunctionKey {
-    return this.punchConfiguration.fk5;
-  }
-
-  /** Returns fk6 */
-  getFK6(): FunctionKey {
-    return this.punchConfiguration.fk6;
+  levelChangeUpdate(form: any) {
+    console.log(form);
+    this._alertService.openSnackBar("Level Change Recorded!");
   }
 
 }

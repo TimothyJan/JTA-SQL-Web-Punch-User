@@ -1,1 +1,91 @@
-<p>level-change works!</p>
+<mat-card>
+  <mat-card-header class="title-center">
+    <mat-card-title>{{ fk.caption }}</mat-card-title>
+  </mat-card-header>
+
+  <form [formGroup]="levelChangeForm" (ngSubmit)="onSubmit()">
+
+    <div class="flex-container">
+      <!-- Message #1 -->
+      <div class="flex-item">
+        <mat-label>{{ fk.msg1 }} </mat-label>
+        <br>
+        <mat-form-field>
+          <input matInput formControlName="msg1Input">
+        </mat-form-field>
+
+        <!-- <button
+          *ngIf="!msg1Disabled"
+          mat-icon-button color="primary"
+          type="button"
+          (click)="openCodeMsg1Dialog()"
+          aria-label="Msg Code 1 Search">
+          <mat-icon>search</mat-icon>
+        </button> -->
+        <div *ngIf="(levelChangeForm.controls['msg1Input'].dirty || levelChangeForm.controls['msg1Input'].touched)">
+          <div *ngIf="levelChangeForm.controls['msg1Input'].errors?.['required']">
+            <mat-error>Message #1 is required.</mat-error>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-container" *ngIf="fk.msg2">
+      <!-- Message #2 -->
+      <div class="flex-item">
+        <mat-label>{{ fk.msg2 }}</mat-label>
+        <br>
+        <mat-form-field>
+          <input matInput formControlName="msg2Input">
+        </mat-form-field>
+        <!-- <button
+          *ngIf="!msg2Disabled"
+          mat-icon-button color="primary"
+          type="button"
+          (click)="openCodeMsg2Dialog()"
+          aria-label="Msg Code 2 Search">
+          <mat-icon>search</mat-icon>
+        </button> -->
+        <div *ngIf="(levelChangeForm.controls['msg2Input'].dirty || levelChangeForm.controls['msg2Input'].touched)">
+          <div *ngIf="levelChangeForm.controls['msg2Input'].errors?.['required']">
+            <mat-error>Message #2 is required.</mat-error>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-container" *ngIf="fk.msg3">
+      <!-- Message #3 -->
+      <div class="flex-item">
+        <mat-label>{{ fk.msg3 }}</mat-label>
+        <br>
+        <mat-form-field>
+          <input matInput formControlName="msg3Input">
+        </mat-form-field>
+        <!-- <button
+          *ngIf="!msg3Disabled"
+          mat-icon-button color="primary"
+          type="button"
+          (click)="openCodeMsg3Dialog()"
+          aria-label="Msg Code 3 Search">
+          <mat-icon>search</mat-icon>
+        </button> -->
+        <div *ngIf="(levelChangeForm.controls['msg3Input'].dirty || levelChangeForm.controls['msg3Input'].touched)">
+          <div *ngIf="levelChangeForm.controls['msg3Input'].errors?.['required']">
+            <mat-error>Message #3 is required.</mat-error>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-button">
+      <button
+        mat-raised-button
+        type="submit"
+        color="primary">
+        Submit
+      </button>
+    </div>
+
+  </form>
+</mat-card>
