@@ -34,7 +34,7 @@ export class LevelChangeComponent implements OnInit{
     msg1Input: new FormControl({value: "", disabled: true}, [Validators.required]),
     msg2Input: new FormControl({value: "", disabled: true}, [Validators.required]),
     msg3Input: new FormControl({value: "", disabled: true}, [Validators.required]),
-  })
+  });
 
   constructor(
     private _jantekService: JantekService,
@@ -217,7 +217,7 @@ export class LevelChangeComponent implements OnInit{
     );
   }
 
-  /**  */
+  /** Submits level change update to JantekService */
   onSubmit(): void {
     if (this.levelChangeForm.valid) {
       this._jantekService.levelChangeUpdate(this.levelChangeForm.value);

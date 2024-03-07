@@ -1,0 +1,21 @@
+
+mat-form-field {
+  width:260px;
+  margin-bottom: -1.25em;
+  padding-bottom: 2%;
+}
+
+.paycode {
+  width:195px;
+  margin-bottom: -1.25em;
+  padding-bottom: 2%;
+}
+
+.submit-button {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  margin: 10px;
+}

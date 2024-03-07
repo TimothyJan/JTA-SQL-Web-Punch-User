@@ -36,10 +36,10 @@
     <app-break-lunch></app-break-lunch>
   </div>
   <div *ngSwitchCase="16">
-    <app-hour-amount-pc></app-hour-amount-pc>
+    <app-hour-amount-pc [functionKeyNumber]="functionKeyNumber"></app-hour-amount-pc>
   </div>
   <div *ngSwitchCase="17">
-    <app-hour-amount-pc></app-hour-amount-pc>
+    <app-hour-amount-pc [functionKeyNumber]="functionKeyNumber"></app-hour-amount-pc>
   </div>
   <div *ngSwitchCase="18">
     <app-view-last-punch></app-view-last-punch>
@@ -48,7 +48,7 @@
     <app-view-total-hours></app-view-total-hours>
   </div>
   <div *ngSwitchCase="20">
-    <app-hour-amount-pc></app-hour-amount-pc>
+    <app-hour-amount-pc [functionKeyNumber]="functionKeyNumber"></app-hour-amount-pc>
   </div>
 
   <div *ngSwitchDefault>

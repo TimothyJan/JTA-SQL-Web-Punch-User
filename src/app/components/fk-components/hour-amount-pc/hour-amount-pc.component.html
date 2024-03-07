@@ -1,1 +1,58 @@
-<p>hour-amount-pc works!</p>
+<mat-card>
+  <mat-card-header class="title-center">
+    <mat-card-title>{{ fk.caption }}</mat-card-title>
+  </mat-card-header>
+
+  <form [formGroup]="payCodeForm" (ngSubmit)="onSubmit()">
+
+    <div class="flex-container" *ngIf="!msg1Disabled">
+      <!-- Message #1 -->
+      <div class="flex-item">
+        <mat-label>{{ fk.msg1 }} </mat-label>
+        <br>
+        <mat-form-field>
+          <input matInput formControlName="msg1Input">
+        </mat-form-field>
+
+        <div *ngIf="(payCodeForm.controls['msg1Input'].dirty || payCodeForm.controls['msg1Input'].touched)">
+          <div *ngIf="payCodeForm.controls['msg1Input'].errors?.['required']">
+            <mat-error>Message #1 is required.</mat-error>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-container">
+      <!-- Pay Code -->
+      <div class="flex-item">
+        <mat-label>Pay Code: </mat-label>
+        <br>
+        <mat-form-field class="paycode">
+          <input matInput formControlName="PCInput">
+        </mat-form-field>
+        <button
+          mat-icon-button color="primary"
+          type="button"
+          (click)="openPayCodeDialog()"
+          aria-label="Pay Code Search">
+          <mat-icon>search</mat-icon>
+        </button>
+        <div *ngIf="(payCodeForm.controls['PCInput'].dirty || payCodeForm.controls['PCInput'].touched)">
+          <div *ngIf="payCodeForm.controls['PCInput'].errors?.['required']">
+            <mat-error>Pay Code is required.</mat-error>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-button">
+      <button
+        mat-raised-button
+        type="submit"
+        color="primary">
+        Submit
+      </button>
+    </div>
+
+  </form>
+</mat-card>

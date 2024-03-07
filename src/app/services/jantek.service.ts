@@ -70,28 +70,28 @@ export class JantekService {
       "PC": 0
     },
     "fk4": {
-      "fktype": 7,
-      "caption": "Level 3 Change",
-      "msg1": "Enter Level 3",
+      "fktype": 16,
+      "caption": "Hour Entry",
+      "msg1": "Enter Hours",
       "msg2": "",
       "msg3": "",
-      "PC": 0
+      "PC": 4
     },
     "fk5": {
-      "fktype": 8,
-      "caption": "Level 1/2 Change",
-      "msg1": "Enter Level 1",
-      "msg2": "Enter Level 2",
+      "fktype": 17,
+      "caption": "Amount Entry",
+      "msg1": "",
+      "msg2": "",
       "msg3": "",
-      "PC": 0
+      "PC": 5
     },
     "fk6": {
-      "fktype": 9,
-      "caption": "Level 1/3 Change",
-      "msg1": "Enter Level 1",
-      "msg2": "Enter Level 3",
+      "fktype": 20,
+      "caption": "Calculated Pay Code",
+      "msg1": "",
+      "msg2": "",
       "msg3": "",
-      "PC": 7
+      "PC": 6
     }
   };
 
@@ -276,6 +276,60 @@ export class JantekService {
   levelChangeUpdate(form: any) {
     console.log(form);
     this._alertService.openSnackBar("Level Change Recorded!");
+  }
+
+  /** Https request to get list of pay codes */
+  getPayCodes(fktype: number): Observable<CodeList> {
+    switch(fktype) {
+      /** "HNC" - Hourly non-calculated (employee enters hour value) */
+      case 16: {
+        const options = {
+          params: {
+            Company: "TIMOTHYPROJECT",
+            pctype: "HNC",
+            order:1,
+            startloc:1,
+            listsize:100
+          }
+        };
+        return this.http.get<CodeList>(`${apiRoot}/swp_GetPcList.asp`, options);
+      }
+      /** "ED" - Earning/Deduction code (employee enters dollar amount) */
+      case 17: {
+        const options = {
+          params: {
+            Company: "TIMOTHYPROJECT",
+            pctype: "ED",
+            order:1,
+            startloc:1,
+            listsize:100
+          }
+        };
+        return this.http.get<CodeList>(`${apiRoot}/swp_GetPcList.asp`, options);
+      }
+      /** "HC" - Hourly Calculated (excluding pacyode 0) */
+      case 20: {
+        const options = {
+          params: {
+            Company: "TIMOTHYPROJECT",
+            pctype: "HC",
+            order:1,
+            startloc:1,
+            listsize:100
+          }
+        };
+        return this.http.get<CodeList>(`${apiRoot}/swp_GetPcList.asp`, options);
+      }
+      default: {
+        console.log("switch default");
+        return this.http.get<CodeList>(`${apiRoot}/swp_GetPcList.asp?Company=TIMOTHYJANPROJECT&pctype=HNC&order=1&startloc=1&listsize=100`);
+      }
+    }
+  }
+
+  payCodeUpdate(form: any) {
+    console.log(form);
+    this._alertService.openSnackBar("Pay Code Update Recorded!");
   }
 
 }

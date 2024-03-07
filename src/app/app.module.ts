@@ -30,6 +30,7 @@ import { ViewTotalHoursComponent } from './components/fk-components/view-total-h
 import { BreakLunchComponent } from './components/fk-components/break-lunch/break-lunch.component';
 import { HourAmountPcComponent } from './components/fk-components/hour-amount-pc/hour-amount-pc.component';
 import { CodeDialogComponent } from './components/fk-components/code-dialog/code-dialog.component';
+import { PayCodeDialogComponent } from './components/fk-components/pay-code-dialog/pay-code-dialog.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { CodeDialogComponent } from './components/fk-components/code-dialog/code
     ViewTotalHoursComponent,
     BreakLunchComponent,
     HourAmountPcComponent,
-    CodeDialogComponent
+    CodeDialogComponent,
+    PayCodeDialogComponent
   ],
   imports: [
     BrowserModule,
