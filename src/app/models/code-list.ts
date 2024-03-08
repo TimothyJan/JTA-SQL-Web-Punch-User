@@ -1,5 +1,5 @@
 export interface CodeList {
-  "allcount": number;
-  "list": [];
-  "status": string
+  allcount: number;
+  list: [];
+  status: string
 }
