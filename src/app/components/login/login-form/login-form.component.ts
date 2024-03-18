@@ -21,6 +21,9 @@ export class LoginFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Initialize punchConfiguration in teh Jantek Service
+    this._jantekService.getPunchConfiguration();
+    // Get logintype for company preferred login
     this.logintype = this._jantekService.getLoginType();
     switch(this.logintype) {
       case 1: {

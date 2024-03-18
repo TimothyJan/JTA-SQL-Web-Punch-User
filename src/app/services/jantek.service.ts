@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AlertService } from './alert.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, catchError, tap } from 'rxjs';
 import { PunchConfig } from '../models/punch-config';
 import { FunctionKey } from '../models/function-key';
 import { CompanyInfo } from '../models/company-info';
 import { CodeList } from '../models/code-list';
+import { CodeStatus } from '../models/code-status';
 
 const apiRoot = "http://201.12.20.40/timothy_jan/sqlwebpunch";
 
@@ -14,6 +15,7 @@ const apiRoot = "http://201.12.20.40/timothy_jan/sqlwebpunch";
 })
 export class JantekService {
   isAuthenticatedChange: Subject<boolean> = new Subject<boolean>();
+  companyName:string = "";
 
   /** DEMO ONLY */
   demoEmployeeNumber:number = 202;
@@ -35,6 +37,66 @@ export class JantekService {
     memback: 67108864
   };
 
+  // punchConfiguration: PunchConfig = {
+  //   "status": "OK",
+  //   "logintype": 1,
+  //   "clocktype": 1,
+  //   "checklo": 0,
+  //   "closetable": 2,
+  //   "lunchlock": 1,
+  //   "lunchlen": 30,
+  //   "breaklock": 0,
+  //   "breaklen": 0,
+  //   "fk1": {
+  //     "fktype": 18,
+  //     "caption": "View Last Punch",
+  //     "msg1": "",
+  //     "msg2": "",
+  //     "msg3": "",
+  //     "PC": 0
+  //   },
+  //   "fk2": {
+  //     "fktype": 4,
+  //     "caption": "Swipe and Go and Level 3",
+  //     "msg1": "Enter Level 3",
+  //     "msg2": "",
+  //     "msg3": "",
+  //     "PC": 0
+  //   },
+  //   "fk3": {
+  //     "fktype": 11,
+  //     "caption": "Level 1/2/3 Change",
+  //     "msg1": "Enter Level 1",
+  //     "msg2": "Enter Level 2",
+  //     "msg3": "Enter Level 3",
+  //     "PC": 0
+  //   },
+  //   "fk4": {
+  //     "fktype": 16,
+  //     "caption": "Hour Entry",
+  //     "msg1": "Enter Hours",
+  //     "msg2": "",
+  //     "msg3": "",
+  //     "PC": 4
+  //   },
+  //   "fk5": {
+  //     "fktype": 17,
+  //     "caption": "Amount Entry",
+  //     "msg1": "",
+  //     "msg2": "",
+  //     "msg3": "",
+  //     "PC": 5
+  //   },
+  //   "fk6": {
+  //     "fktype": 20,
+  //     "caption": "Calculated Pay Code",
+  //     "msg1": "",
+  //     "msg2": "",
+  //     "msg3": "",
+  //     "PC": 6
+  //   }
+  // };
+
   punchConfiguration: PunchConfig = {
     "status": "OK",
     "logintype": 1,
@@ -46,50 +108,50 @@ export class JantekService {
     "breaklock": 0,
     "breaklen": 0,
     "fk1": {
-      "fktype": 18,
-      "caption": "View Last Punch",
-      "msg1": "",
+      "fktype": 5,
+      "caption": "Level 1 Change",
+      "msg1": "Enter Level 1",
       "msg2": "",
       "msg3": "",
       "PC": 0
     },
     "fk2": {
-      "fktype": 4,
-      "caption": "Swipe and Go and Level 3",
-      "msg1": "Enter Level 3",
+      "fktype": 6,
+      "caption": "Level 2 Change",
+      "msg1": "Enter Level 2",
       "msg2": "",
       "msg3": "",
       "PC": 0
     },
     "fk3": {
-      "fktype": 11,
-      "caption": "Level 1/2/3 Change",
-      "msg1": "Enter Level 1",
-      "msg2": "Enter Level 2",
-      "msg3": "Enter Level 3",
+      "fktype": 7,
+      "caption": "Level 3 Change",
+      "msg1": "Enter Level 3",
+      "msg2": "",
+      "msg3": "",
       "PC": 0
     },
     "fk4": {
-      "fktype": 16,
-      "caption": "Hour Entry",
-      "msg1": "Enter Hours",
-      "msg2": "",
+      "fktype": 8,
+      "caption": "Level 1/2 Change",
+      "msg1": "Enter Level 1",
+      "msg2": "Enter Level 2",
       "msg3": "",
       "PC": 4
     },
     "fk5": {
-      "fktype": 17,
-      "caption": "Amount Entry",
-      "msg1": "",
-      "msg2": "",
+      "fktype": 9,
+      "caption": "Level 1/3 Change",
+      "msg1": "Enter Level 1",
+      "msg2": "Enter Level 3",
       "msg3": "",
       "PC": 5
     },
     "fk6": {
-      "fktype": 20,
-      "caption": "Calculated Pay Code",
-      "msg1": "",
-      "msg2": "",
+      "fktype": 10,
+      "caption": "Level 2/3 Change",
+      "msg1": "Enter Level 2",
+      "msg2": "Enter Level 3",
       "msg3": "",
       "PC": 6
     }
@@ -103,11 +165,22 @@ export class JantekService {
   ) { }
 
   /** Https request to get punch configuration from server */
-  getPunchConfiguration() { //: Observable<PunchConfig> {
-    // return this.http.get<PunchConfig>(`${apiRoot}/swp_getpunchcfg.asp`);
-    /** TESTING */
+  // getPunchConfiguration() : Observable<PunchConfig> {
+  //   const options = {
+  //     params: {
+  //       Company: "TIMOTHYPROJECT",
+  //     }
+  //   };
+  //   return this.http.get<PunchConfig>(`${apiRoot}/swp_getpunchcfg.asp`, options);
+  // }
+  /** FOR TESTING WITH DIFFERENT PUNCH CONFIG ONLY */
+  getPunchConfiguration() {
     return this.punchConfiguration;
-    /** --TESTING */
+  }
+
+  /** Return current Login Type */
+  getLoginType(): number {
+    return this.punchConfiguration.logintype;
   }
 
   /** TESTING */
@@ -131,22 +204,23 @@ export class JantekService {
     return false;
   }
 
-  /** Return current Login Type */
-  getLoginType(): number {
-    return this.punchConfiguration.logintype;
-  }
-
   /** Log Off */
   logoff() {
     this.isAuthenticatedChange.next(false);
     this._alertService.openSnackBar("Logoff Successful");
   }
 
-  /** INCOMPLETE */
+  /** Incomplete */
   /** Https request to gets company info from server */
-  getCompanyInfo() {
-    return this.http.get<CompanyInfo>(`${apiRoot}/swp_getinfo.asp`);
+  getCompanyInfo(): Observable<CompanyInfo> {
+    const options = {
+      params: {
+        Company: "TIMOTHYPROJECT",
+      }
+    };
+    return this.http.get<CompanyInfo>(`${apiRoot}/swp_getinfo.asp`, options)
   }
+
 
   /** Returns current Clock Type */
   getClockType(): number {
@@ -271,6 +345,41 @@ export class JantekService {
       }
     };
     return this.http.get<CodeList>(`${apiRoot}/swp_GetL3List.asp`, options);
+  }
+
+  /** Check if L1 code exists */
+  checkL1CodeExists(code:number): Observable<CodeStatus> {
+    const options = {
+      params: {
+        Company: "TIMOTHYPROJECT",
+        l1code:code,
+      }
+    };
+    return this.http.get<CodeStatus>(`${apiRoot}/swp_chkL1.asp`, options);
+  }
+
+  /** Check if L2 code exists */
+  checkL2CodeExists(code:number): Observable<CodeStatus> {
+    const options = {
+      params: {
+        Company: "TIMOTHYPROJECT",
+        l2code:code,
+      }
+    };
+    return this.http.get<CodeStatus>(`${apiRoot}/swp_chkL2.asp`, options);
+  }
+
+  /** Check if L3 code exists
+   * INCOMPLETE
+  */
+  checkL3CodeExists(code:number): Observable<CodeStatus> {
+    const options = {
+      params: {
+        Company: "TIMOTHYPROJECT",
+        l3code:code,
+      }
+    };
+    return this.http.get<CodeStatus>(`${apiRoot}/swp_chkL3.asp`, options);
   }
 
   levelChangeUpdate(form: any) {

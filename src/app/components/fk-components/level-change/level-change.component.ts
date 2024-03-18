@@ -4,18 +4,24 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { JantekService } from '../../../services/jantek.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CodeDialogComponent } from '../code-dialog/code-dialog.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-level-change',
   templateUrl: './level-change.component.html',
   styleUrl: './level-change.component.css'
 })
+
 export class LevelChangeComponent implements OnInit{
   @Input() functionKeyNumber: number = 0;
 
   msg1Disabled: boolean = true;
   msg2Disabled: boolean = true;
   msg3Disabled: boolean = true;
+
+  level1Label:string = "";
+  level2Label:string = "";
+  level3Label:string = "";
 
   fk: FunctionKey = {
     "fktype": 1,
@@ -26,14 +32,10 @@ export class LevelChangeComponent implements OnInit{
     "PC": 0
   };
 
-  level1Label:string = "";
-  level2Label:string = "";
-  level3Label:string = "";
-
   levelChangeForm = new FormGroup({
-    msg1Input: new FormControl({value: "", disabled: true}, [Validators.required]),
-    msg2Input: new FormControl({value: "", disabled: true}, [Validators.required]),
-    msg3Input: new FormControl({value: "", disabled: true}, [Validators.required]),
+    msg1Input: new FormControl({value: "", disabled: true}, [Validators.required, Validators.pattern("^[0-9]*$"),]),
+    msg2Input: new FormControl({value: "", disabled: true}, [Validators.required, Validators.pattern("^[0-9]*$"),]),
+    msg3Input: new FormControl({value: "", disabled: true}, [Validators.required, Validators.pattern("^[0-9]*$"),]),
   });
 
   constructor(
@@ -217,11 +219,152 @@ export class LevelChangeComponent implements OnInit{
     );
   }
 
-  /** Submits level change update to JantekService */
-  onSubmit(): void {
-    if (this.levelChangeForm.valid) {
-      this._jantekService.levelChangeUpdate(this.levelChangeForm.value);
+  /** Checks if L1 code exists */
+  async checkL1CodeExists(code:any): Promise<boolean>  {
+    return new Promise<boolean>((resolve, reject) => {
+      this._jantekService.checkL1CodeExists(+code).subscribe(
+        data => {
+            if (data["found"] > 0) {
+                resolve(true);
+            } else {
+                resolve(false);
+            }
+        },
+        error => {
+            console.error("Error checking L1 code existence:", error);
+            reject(error);
+        }
+      );
+    });
+  }
+
+  /** Checks if L2 code exists */
+  async checkL2CodeExists(code:any): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this._jantekService.checkL2CodeExists(+code).subscribe(
+        data => {
+            if (data["found"] > 0) {
+                resolve(true);
+            } else {
+                resolve(false);
+            }
+        },
+        error => {
+            console.error("Error checking L2 code existence:", error);
+            reject(error);
+        }
+      );
+    });
+  }
+
+  /** Checks if L3 code exists */
+  async checkL3CodeExists(code:any): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this._jantekService.checkL3CodeExists(+code).subscribe(
+        data => {
+            if (data["found"] > 0) {
+                console.log(data["found"]);
+                resolve(true);
+            } else {
+                resolve(false);
+            }
+        },
+        error => {
+            console.error("Error checking L3 code existence:", error);
+            reject(error);
+        }
+      );
+    });
+  }
+
+  async checkMsg1LevelCode(levelCode: any) {
+    levelCode = levelCode.value
+    // Send valid or invalid code message based on L1CodeExists
+    try {
+      const exists = await this.checkL1CodeExists(levelCode);
+      console.log('L1 code exists:', exists);
+    } catch (error) {
+      console.error('Error occurred:', error);
     }
   }
 
+  /** Checks if all level codes are valid to JantekService */
+  async onSubmit(): Promise<void> {
+    let allLevelCodesExist = false
+    if (this.levelChangeForm.valid) {
+      switch(this.fk.fktype) {
+        case 4: { // Swipe-and-go w/ L3 change INCOMPLETE
+
+          break;
+        }
+        case 5: { // L1 change
+          if (await this.checkL1CodeExists(this.levelChangeForm.controls.msg1Input.value)) {
+            allLevelCodesExist = true;
+          } else {
+            allLevelCodesExist = false;
+          }
+          break;
+        }
+        case 6: { // L2 change
+          if (await this.checkL2CodeExists(this.levelChangeForm.controls.msg1Input.value)) {
+            allLevelCodesExist = true;
+          } else {
+            allLevelCodesExist = false;
+          }
+          break;
+        }
+        case 7: { // L3 change
+          if (await this.checkL3CodeExists(this.levelChangeForm.controls.msg1Input.value)) {
+            allLevelCodesExist = true;
+          } else {
+            allLevelCodesExist = false;
+          }
+          break;
+        }
+        case 8: { // L1, L2 change
+          if (await this.checkL1CodeExists(this.levelChangeForm.controls.msg1Input.value) && await this.checkL2CodeExists(this.levelChangeForm.controls.msg2Input.value)) {
+            allLevelCodesExist = true;
+          } else {
+            allLevelCodesExist = false;
+          }
+          break;
+        }
+        case 9: { // L1, L3 change
+          if (await this.checkL1CodeExists(this.levelChangeForm.controls.msg1Input.value) && await this.checkL3CodeExists(this.levelChangeForm.controls.msg2Input.value)) {
+            allLevelCodesExist = true;
+          } else {
+            allLevelCodesExist = false;
+          }
+          break;
+        }
+        case 10: { // L2, L3 change
+          if (await this.checkL2CodeExists(this.levelChangeForm.controls.msg1Input.value) && await this.checkL3CodeExists(this.levelChangeForm.controls.msg2Input.value)) {
+            allLevelCodesExist = true;
+          } else {
+            allLevelCodesExist = false;
+          }
+          break;
+        }
+        case 11: { // L1, L2, L3 change
+          if (await this.checkL1CodeExists(this.levelChangeForm.controls.msg1Input.value) && await this.checkL2CodeExists(this.levelChangeForm.controls.msg2Input.value) && await this.checkL3CodeExists(this.levelChangeForm.controls.msg3Input.value)) {
+            allLevelCodesExist = true;
+          } else {
+            allLevelCodesExist = false;
+          }
+          break;
+        }
+        default: {
+          console.log("Error getting fktype");
+        }
+      }
+    }
+    if (allLevelCodesExist) {
+      this.submitLeveChange();
+    }
+  }
+
+  /** Submits level change update to JantekService */
+  submitLeveChange(): void {
+    this._jantekService.levelChangeUpdate(this.levelChangeForm.value);
+  }
 }

@@ -25,7 +25,10 @@
 
         <div *ngIf="(levelChangeForm.controls['msg1Input'].dirty || levelChangeForm.controls['msg1Input'].touched)">
           <div *ngIf="levelChangeForm.controls['msg1Input'].errors?.['required']">
-            <mat-error>Message #1 is required.</mat-error>
+            <mat-error>Level Code is required.</mat-error>
+          </div>
+          <div *ngIf="levelChangeForm.controls['msg1Input'].errors?.['pattern']">
+            <mat-error>Level Code should contain only numbers.</mat-error>
           </div>
         </div>
       </div>
@@ -51,7 +54,10 @@
 
         <div *ngIf="(levelChangeForm.controls['msg2Input'].dirty || levelChangeForm.controls['msg2Input'].touched)">
           <div *ngIf="levelChangeForm.controls['msg2Input'].errors?.['required']">
-            <mat-error>Message #2 is required.</mat-error>
+            <mat-error>Level Code is required.</mat-error>
+          </div>
+          <div *ngIf="levelChangeForm.controls['msg2Input'].errors?.['pattern']">
+            <mat-error>Level Code should contain only numbers.</mat-error>
           </div>
         </div>
       </div>
@@ -77,7 +83,10 @@
 
         <div *ngIf="(levelChangeForm.controls['msg3Input'].dirty || levelChangeForm.controls['msg3Input'].touched)">
           <div *ngIf="levelChangeForm.controls['msg3Input'].errors?.['required']">
-            <mat-error>Message #3 is required.</mat-error>
+            <mat-error>level Code is required.</mat-error>
+          </div>
+          <div *ngIf="levelChangeForm.controls['msg3Input'].errors?.['pattern']">
+            <mat-error>Level Code should contain only numbers.</mat-error>
           </div>
         </div>
       </div>
