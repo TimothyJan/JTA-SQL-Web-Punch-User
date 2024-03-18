@@ -4,7 +4,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { JantekService } from '../../../services/jantek.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CodeDialogComponent } from '../code-dialog/code-dialog.component';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-level-change',
@@ -224,15 +223,15 @@ export class LevelChangeComponent implements OnInit{
     return new Promise<boolean>((resolve, reject) => {
       this._jantekService.checkL1CodeExists(+code).subscribe(
         data => {
-            if (data["found"] > 0) {
-                resolve(true);
-            } else {
-                resolve(false);
-            }
+          if (data["found"] > 0) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
         },
         error => {
-            console.error("Error checking L1 code existence:", error);
-            reject(error);
+          console.error("Error checking L1 code existence:", error);
+          reject(error);
         }
       );
     });
@@ -243,15 +242,15 @@ export class LevelChangeComponent implements OnInit{
     return new Promise<boolean>((resolve, reject) => {
       this._jantekService.checkL2CodeExists(+code).subscribe(
         data => {
-            if (data["found"] > 0) {
-                resolve(true);
-            } else {
-                resolve(false);
-            }
+          if (data["found"] > 0) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
         },
         error => {
-            console.error("Error checking L2 code existence:", error);
-            reject(error);
+          console.error("Error checking L2 code existence:", error);
+          reject(error);
         }
       );
     });
@@ -262,16 +261,16 @@ export class LevelChangeComponent implements OnInit{
     return new Promise<boolean>((resolve, reject) => {
       this._jantekService.checkL3CodeExists(+code).subscribe(
         data => {
-            if (data["found"] > 0) {
-                console.log(data["found"]);
-                resolve(true);
-            } else {
-                resolve(false);
-            }
+          if (data["found"] > 0) {
+            console.log(data["found"]);
+            resolve(true);
+          } else {
+            resolve(false);
+          }
         },
         error => {
-            console.error("Error checking L3 code existence:", error);
-            reject(error);
+          console.error("Error checking L3 code existence:", error);
+          reject(error);
         }
       );
     });

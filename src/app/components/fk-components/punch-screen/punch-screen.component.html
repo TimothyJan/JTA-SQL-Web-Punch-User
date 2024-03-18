@@ -8,18 +8,9 @@
 
     <app-date-time></app-date-time>
 
-    <div class="flex-container" *ngIf="isAdmin">
+    <div class="flex-container">
       <div class="flex-item">
-        <mat-label>User</mat-label>
-        <br>
-        <mat-form-field>
-          <input matInput formControlName="user">
-        </mat-form-field>
-        <div *ngIf="(punchForm.controls['user'].dirty || punchForm.controls['user'].touched)">
-          <div *ngIf="punchForm.controls['user'].errors?.['required']">
-            <mat-error>User is required.</mat-error>
-          </div>
-        </div>
+        <mat-label>Welcome {{ username }}</mat-label>
       </div>
     </div>
 

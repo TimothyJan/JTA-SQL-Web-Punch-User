@@ -5,12 +5,15 @@
 
       <div *ngSwitchCase="1">
         <mat-form-field>
-          <mat-label>Employee #</mat-label>
-          <input matInput formControlName="employeeNumber">
+          <mat-label>Employee ID</mat-label>
+          <input matInput formControlName="employeeID">
         </mat-form-field>
-        <div *ngIf="(loginForm.controls['employeeNumber'].dirty || loginForm.controls['employeeNumber'].touched)" class="alert-danger">
-          <div *ngIf="loginForm.controls['employeeNumber'].errors?.['required']">
-            <mat-error>Please enter your Employee Number</mat-error>
+        <div *ngIf="(loginForm.controls['employeeID'].dirty || loginForm.controls['employeeID'].touched)" class="alert-danger">
+          <div *ngIf="loginForm.controls['employeeID'].errors?.['required']">
+            <mat-error>Please enter your Employee ID</mat-error>
+          </div>
+          <div *ngIf="loginForm.controls['employeeID'].errors?.['pattern']">
+            <mat-error>Employee ID should contain only numbers.</mat-error>
           </div>
         </div>
 
@@ -22,17 +25,23 @@
           <div *ngIf="loginForm.controls['cardNumber'].errors?.['required']">
             <mat-error>Please enter your Card Number</mat-error>
           </div>
+          <div *ngIf="loginForm.controls['cardNumber'].errors?.['pattern']">
+            <mat-error>Card Number should contain only numbers.</mat-error>
+          </div>
         </div>
       </div>
 
       <div *ngSwitchCase="2">
         <mat-form-field>
-          <mat-label>Employee #</mat-label>
-          <input matInput formControlName="employeeNumber">
+          <mat-label>Employee ID</mat-label>
+          <input matInput formControlName="employeeID">
         </mat-form-field>
-        <div *ngIf="(loginForm.controls['employeeNumber'].dirty || loginForm.controls['employeeNumber'].touched)" class="alert-danger">
-          <div *ngIf="loginForm.controls['employeeNumber'].errors?.['required']">
-            <mat-error>Please enter your Employee Number</mat-error>
+        <div *ngIf="(loginForm.controls['employeeID'].dirty || loginForm.controls['employeeID'].touched)" class="alert-danger">
+          <div *ngIf="loginForm.controls['employeeID'].errors?.['required']">
+            <mat-error>Please enter your Employee ID</mat-error>
+          </div>
+          <div *ngIf="loginForm.controls['employeeID'].errors?.['pattern']">
+            <mat-error>Employee ID should contain only numbers.</mat-error>
           </div>
         </div>
       </div>
@@ -45,6 +54,9 @@
         <div *ngIf="(loginForm.controls['cardNumber'].dirty || loginForm.controls['cardNumber'].touched)" class="alert-danger">
           <div *ngIf="loginForm.controls['cardNumber'].errors?.['required']">
             <mat-error>Please enter your Card Number</mat-error>
+          </div>
+          <div *ngIf="loginForm.controls['cardNumber'].errors?.['pattern']">
+            <mat-error>Card Number should contain only numbers.</mat-error>
           </div>
         </div>
       </div>

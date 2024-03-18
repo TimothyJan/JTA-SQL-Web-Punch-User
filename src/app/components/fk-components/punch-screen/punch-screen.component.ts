@@ -8,9 +8,9 @@ import { JantekService } from '../../../services/jantek.service';
   styleUrl: './punch-screen.component.css'
 })
 export class PunchScreenComponent implements OnInit{
-  isAdmin: boolean = false;
   clocktype: string = "";
   currentDateTime = new Date();
+  username: string = "";
   punchForm: FormGroup = new FormGroup({
     user: new FormControl({value: "", disabled: true}, Validators.required),
     punch: new FormControl("", Validators.required),
@@ -22,6 +22,7 @@ export class PunchScreenComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
+    this.username = this._jantekService.employeeStatus.firstname + " " + this._jantekService.employeeStatus.lastname;
     /** Needed to get the punchconfig including clocktype */
     this._jantekService.getPunchConfiguration();
     this.clocktype = this.FkClockTypeDesc(

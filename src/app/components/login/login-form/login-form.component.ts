@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 })
 export class LoginFormComponent implements OnInit {
   logintype: number = 0;
-  loginForm: FormGroup = new FormGroup({
-    employeeNumber: new FormControl({value:'', disabled:true}, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
+  loginForm = new FormGroup({
+    employeeID: new FormControl({value:'', disabled:true}, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
     cardNumber: new FormControl({value:'', disabled:true}, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
   });
 
@@ -21,34 +21,98 @@ export class LoginFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Initialize punchConfiguration in teh Jantek Service
+    // Initialize punchConfiguration in the Jantek Service
     this._jantekService.getPunchConfiguration();
     // Get logintype for company preferred login
     this.logintype = this._jantekService.getLoginType();
     switch(this.logintype) {
       case 1: {
-        this.loginForm.controls["employeeNumber"].enable();
+        this.loginForm.controls["employeeID"].enable();
         this.loginForm.controls["cardNumber"].enable();
         break;
       }
       case 2: {
-        this.loginForm.controls["employeeNumber"].enable();
+        this.loginForm.controls["employeeID"].enable();
         this.loginForm.controls["cardNumber"].disable();
         break;
       }
       case 3: {
-        this.loginForm.controls["employeeNumber"].disable();
+        this.loginForm.controls["employeeID"].disable();
         this.loginForm.controls["cardNumber"].enable();
         break;
       }
     }
   }
 
-  onLogin() {
+  /** Checks if Employee Number exists and assigns first/last name */
+  async checkEmployeeIDExists(employeeID: any): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this._jantekService.checkEmployeeIDExists(+employeeID).subscribe(
+        data => {
+          console.log(data);
+          if (data["found"] > 0) {
+            this._jantekService.employeeStatus = data
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        },
+        error => {
+            console.error("Error checking Employee ID existence:", error);
+            reject(error);
+        }
+      );
+    });
+  }
+
+  /** Checks if Card Number exists and assigns first/last name */
+  async checkCardNumberExists(cardnumber: any): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      this._jantekService.checkCardNumberExists(+cardnumber).subscribe(
+        data => {
+          console.log(data);
+          if (data["found"] > 0) {
+            this._jantekService.employeeStatus = data
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        },
+        error => {
+            console.error("Error checking Card Number existence:", error);
+            reject(error);
+        }
+      );
+    });
+  }
+
+  /** Checks if login form has valid login information */
+  async onLogin() {
+    let validLogin = false;
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
-      this._jantekService.login(this.loginForm.value);
+      switch(this.logintype) {
+        case 1: // Employee and Card Number
+          if (await this.checkEmployeeIDExists(this.loginForm.controls.employeeID.value) && await this.checkCardNumberExists(this.loginForm.controls.cardNumber.value)) {
+            validLogin = true;
+          }
+          break;
+        case 2: // Employee ID Only
+          if (await this.checkEmployeeIDExists(this.loginForm.controls.employeeID.value)) {
+            validLogin = true;
+          }
+          break;
+        case 3: // Card Number Only
+          if (await this.checkCardNumberExists(this.loginForm.controls.cardNumber.value)) {
+            validLogin = true;
+          }
+          break;
+      }
+    }
+    if (validLogin) {
+      this._jantekService.login();
       this.router.navigate(["punch-screen"]);
+    } else {
+      this._jantekService.invalidLogin();
     }
     this.loginForm.reset();
   }

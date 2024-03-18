@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AlertService } from './alert.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, catchError, tap } from 'rxjs';
+import { Observable, Subject, catchError, first, tap } from 'rxjs';
 import { PunchConfig } from '../models/punch-config';
 import { FunctionKey } from '../models/function-key';
 import { CompanyInfo } from '../models/company-info';
 import { CodeList } from '../models/code-list';
 import { CodeStatus } from '../models/code-status';
+import { EmployeeStatus } from '../models/employee-status';
 
 const apiRoot = "http://201.12.20.40/timothy_jan/sqlwebpunch";
 
@@ -16,10 +17,6 @@ const apiRoot = "http://201.12.20.40/timothy_jan/sqlwebpunch";
 export class JantekService {
   isAuthenticatedChange: Subject<boolean> = new Subject<boolean>();
   companyName:string = "";
-
-  /** DEMO ONLY */
-  demoEmployeeNumber:number = 202;
-  demoCardNumber:number = 202;
 
   companyInfo: CompanyInfo = {
     status: "OK",
@@ -37,6 +34,66 @@ export class JantekService {
     memback: 67108864
   };
 
+  punchConfiguration: PunchConfig = {
+    status: "OK",
+    logintype: 1,
+    clocktype: 1,
+    checklo: 0,
+    closetable: 2,
+    lunchlock: 1,
+    lunchlen: 30,
+    breaklock: 0,
+    breaklen: 0,
+    fk1: {
+      "fktype": 18,
+      "caption": "View Last Punch",
+      "msg1": "",
+      "msg2": "",
+      "msg3": "",
+      "PC": 0
+    },
+    fk2: {
+      "fktype": 4,
+      "caption": "Swipe and Go and Level 3",
+      "msg1": "Enter Level 3",
+      "msg2": "",
+      "msg3": "",
+      "PC": 0
+    },
+    fk3: {
+      "fktype": 11,
+      "caption": "Level 1/2/3 Change",
+      "msg1": "Enter Level 1",
+      "msg2": "Enter Level 2",
+      "msg3": "Enter Level 3",
+      "PC": 0
+    },
+    fk4: {
+      "fktype": 16,
+      "caption": "Hour Entry",
+      "msg1": "Enter Hours",
+      "msg2": "",
+      "msg3": "",
+      "PC": 4
+    },
+    fk5: {
+      "fktype": 17,
+      "caption": "Amount Entry",
+      "msg1": "",
+      "msg2": "",
+      "msg3": "",
+      "PC": 5
+    },
+    fk6: {
+      "fktype": 20,
+      "caption": "Calculated Pay Code",
+      "msg1": "",
+      "msg2": "",
+      "msg3": "",
+      "PC": 6
+    }
+  };
+
   // punchConfiguration: PunchConfig = {
   //   "status": "OK",
   //   "logintype": 1,
@@ -48,116 +105,65 @@ export class JantekService {
   //   "breaklock": 0,
   //   "breaklen": 0,
   //   "fk1": {
-  //     "fktype": 18,
-  //     "caption": "View Last Punch",
-  //     "msg1": "",
+  //     "fktype": 5,
+  //     "caption": "Level 1 Change",
+  //     "msg1": "Enter Level 1",
   //     "msg2": "",
   //     "msg3": "",
   //     "PC": 0
   //   },
   //   "fk2": {
-  //     "fktype": 4,
-  //     "caption": "Swipe and Go and Level 3",
-  //     "msg1": "Enter Level 3",
+  //     "fktype": 6,
+  //     "caption": "Level 2 Change",
+  //     "msg1": "Enter Level 2",
   //     "msg2": "",
   //     "msg3": "",
   //     "PC": 0
   //   },
   //   "fk3": {
-  //     "fktype": 11,
-  //     "caption": "Level 1/2/3 Change",
-  //     "msg1": "Enter Level 1",
-  //     "msg2": "Enter Level 2",
-  //     "msg3": "Enter Level 3",
+  //     "fktype": 7,
+  //     "caption": "Level 3 Change",
+  //     "msg1": "Enter Level 3",
+  //     "msg2": "",
+  //     "msg3": "",
   //     "PC": 0
   //   },
   //   "fk4": {
-  //     "fktype": 16,
-  //     "caption": "Hour Entry",
-  //     "msg1": "Enter Hours",
-  //     "msg2": "",
+  //     "fktype": 8,
+  //     "caption": "Level 1/2 Change",
+  //     "msg1": "Enter Level 1",
+  //     "msg2": "Enter Level 2",
   //     "msg3": "",
   //     "PC": 4
   //   },
   //   "fk5": {
-  //     "fktype": 17,
-  //     "caption": "Amount Entry",
-  //     "msg1": "",
-  //     "msg2": "",
+  //     "fktype": 9,
+  //     "caption": "Level 1/3 Change",
+  //     "msg1": "Enter Level 1",
+  //     "msg2": "Enter Level 3",
   //     "msg3": "",
   //     "PC": 5
   //   },
   //   "fk6": {
-  //     "fktype": 20,
-  //     "caption": "Calculated Pay Code",
-  //     "msg1": "",
-  //     "msg2": "",
+  //     "fktype": 10,
+  //     "caption": "Level 2/3 Change",
+  //     "msg1": "Enter Level 2",
+  //     "msg2": "Enter Level 3",
   //     "msg3": "",
   //     "PC": 6
   //   }
   // };
 
-  punchConfiguration: PunchConfig = {
-    "status": "OK",
-    "logintype": 1,
-    "clocktype": 1,
-    "checklo": 0,
-    "closetable": 2,
-    "lunchlock": 1,
-    "lunchlen": 30,
-    "breaklock": 0,
-    "breaklen": 0,
-    "fk1": {
-      "fktype": 5,
-      "caption": "Level 1 Change",
-      "msg1": "Enter Level 1",
-      "msg2": "",
-      "msg3": "",
-      "PC": 0
-    },
-    "fk2": {
-      "fktype": 6,
-      "caption": "Level 2 Change",
-      "msg1": "Enter Level 2",
-      "msg2": "",
-      "msg3": "",
-      "PC": 0
-    },
-    "fk3": {
-      "fktype": 7,
-      "caption": "Level 3 Change",
-      "msg1": "Enter Level 3",
-      "msg2": "",
-      "msg3": "",
-      "PC": 0
-    },
-    "fk4": {
-      "fktype": 8,
-      "caption": "Level 1/2 Change",
-      "msg1": "Enter Level 1",
-      "msg2": "Enter Level 2",
-      "msg3": "",
-      "PC": 4
-    },
-    "fk5": {
-      "fktype": 9,
-      "caption": "Level 1/3 Change",
-      "msg1": "Enter Level 1",
-      "msg2": "Enter Level 3",
-      "msg3": "",
-      "PC": 5
-    },
-    "fk6": {
-      "fktype": 10,
-      "caption": "Level 2/3 Change",
-      "msg1": "Enter Level 2",
-      "msg2": "Enter Level 3",
-      "msg3": "",
-      "PC": 6
-    }
-  };
-
   /** -DEMO ONLY */
+
+  employeeStatus: EmployeeStatus = {
+    status: "",
+    cardnum: 0,
+    found: 0,
+    empid: "",
+    lastname: "",
+    firstname: ""
+  }
 
   constructor(
     private _alertService: AlertService,
@@ -183,25 +189,38 @@ export class JantekService {
     return this.punchConfiguration.logintype;
   }
 
-  /** TESTING */
-  /** Check user in database and login*/
-  login(form: any): boolean {
-    // Admin Authentication
-    if(form.employeeNumber == this.demoEmployeeNumber && form.cardNumber == this.demoCardNumber) {
-      this.isAuthenticatedChange.next(true);
-      this._alertService.openSnackBar("Login Successful");
-      /** get punch configuration */
-      // this.getPunchConfiguration().subscribe(
-      //   data => this.punchConfiguration = { ...data}
-      // );
+  /** Checks if Employee ID exists */
+  checkEmployeeIDExists(employeeID: number): Observable<EmployeeStatus> {
+    const options = {
+      params: {
+        Company: "TIMOTHYPROJECT",
+        EmpID:employeeID,
+      }
+    };
+    return this.http.get<EmployeeStatus>(`${apiRoot}/swp_chkempid.asp`, options);
+  }
 
-      /** Testing */
-      this.getPunchConfiguration();
-      /** -Testing */
-      return true;
-    }
-    this._alertService.openSnackBar("Incorrect Login");
-    return false;
+  /** Checks if Employee ID exists */
+  checkCardNumberExists(cardNumber: number): Observable<EmployeeStatus> {
+    const options = {
+      params: {
+        Company: "TIMOTHYPROJECT",
+        cardnum: cardNumber,
+      }
+    };
+    return this.http.get<EmployeeStatus>(`${apiRoot}/swp_chkcardnum.asp`, options);
+  }
+
+  /** Authenticate to access other functions */
+  login(): void {
+    this.isAuthenticatedChange.next(true);
+    this._alertService.openSnackBar("Login Successful");
+  }
+
+  /** Login information is incorrect */
+  invalidLogin(): void {
+    this.isAuthenticatedChange.next(false);
+    this._alertService.openSnackBar("Invalid Login");
   }
 
   /** Log Off */
