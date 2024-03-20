@@ -190,7 +190,7 @@ export class JantekService {
   }
 
   /** Checks if Employee ID exists */
-  checkEmployeeIDExists(employeeID: number): Observable<EmployeeStatus> {
+  getEmployeeIDStatus(employeeID: number): Observable<EmployeeStatus> {
     const options = {
       params: {
         Company: "TIMOTHYPROJECT",
@@ -201,7 +201,7 @@ export class JantekService {
   }
 
   /** Checks if Employee ID exists */
-  checkCardNumberExists(cardNumber: number): Observable<EmployeeStatus> {
+  getCardNumberStatus(cardNumber: number): Observable<EmployeeStatus> {
     const options = {
       params: {
         Company: "TIMOTHYPROJECT",

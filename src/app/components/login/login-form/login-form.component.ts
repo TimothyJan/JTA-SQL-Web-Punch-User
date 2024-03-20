@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { JantekService } from '../../../services/jantek.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { EmployeeStatus } from '../../../models/employee-status';
 
 @Component({
   selector: 'app-login-form',
@@ -14,6 +15,7 @@ export class LoginFormComponent implements OnInit {
     employeeID: new FormControl({value:'', disabled:true}, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
     cardNumber: new FormControl({value:'', disabled:true}, [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]),
   });
+  validLogin: boolean = false;
 
   constructor(
     private _jantekService: JantekService,
@@ -44,17 +46,17 @@ export class LoginFormComponent implements OnInit {
     }
   }
 
-  /** Checks if Employee Number exists and assigns first/last name */
-  async checkEmployeeIDExists(employeeID: any): Promise<boolean> {
-    return new Promise<boolean>((resolve, reject) => {
-      this._jantekService.checkEmployeeIDExists(+employeeID).subscribe(
+  /** Gets EmployeeStatus using the Employee ID and assigns if valid login*/
+  async getEmployeeIDStatus(employeeID: any): Promise<EmployeeStatus> {
+    return new Promise<EmployeeStatus>((resolve, reject) => {
+      this._jantekService.getEmployeeIDStatus(+employeeID).subscribe(
         data => {
-          console.log(data);
           if (data["found"] > 0) {
-            this._jantekService.employeeStatus = data
-            resolve(true);
+            this.isValidLogin();
+            resolve(data);
           } else {
-            resolve(false);
+            this.isInvalidLogin();
+            resolve(data);
           }
         },
         error => {
@@ -65,17 +67,17 @@ export class LoginFormComponent implements OnInit {
     });
   }
 
-  /** Checks if Card Number exists and assigns first/last name */
-  async checkCardNumberExists(cardnumber: any): Promise<boolean> {
-    return new Promise<boolean>((resolve, reject) => {
-      this._jantekService.checkCardNumberExists(+cardnumber).subscribe(
+  /** Gets EmployeeStatus using the Card Number and assigns if valid login*/
+  async getCardNumberStatus(cardNumber: any): Promise<EmployeeStatus> {
+    return new Promise<EmployeeStatus>((resolve, reject) => {
+      this._jantekService.getCardNumberStatus(+cardNumber).subscribe(
         data => {
-          console.log(data);
           if (data["found"] > 0) {
-            this._jantekService.employeeStatus = data
-            resolve(true);
+            this.isValidLogin();
+            resolve(data);
           } else {
-            resolve(false);
+            this.isInvalidLogin();
+            resolve(data);
           }
         },
         error => {
@@ -86,29 +88,45 @@ export class LoginFormComponent implements OnInit {
     });
   }
 
+  /** Compares Employee ID data and Card Number data exist and match */
+  compareEmployeeStatuses(promise1: Promise<EmployeeStatus>, promise2: Promise<EmployeeStatus>): Promise<boolean> {
+    return Promise.all([promise1, promise2]).then(([obj1, obj2]) => {
+      // Check if values of all properties are equal
+      return obj1.status === obj2.status &&
+              obj1.cardnum === obj2.cardnum &&
+              obj1.found === obj2.found &&
+              obj1.empid === obj2.empid &&
+              obj1.lastname === obj2.lastname &&
+              obj1.firstname === obj2.firstname;
+    });
+  }
+
+  isInvalidLogin(): void {
+    this.validLogin = false;
+  }
+
+  isValidLogin(): void {
+    this.validLogin = true;
+  }
+
   /** Checks if login form has valid login information */
   async onLogin() {
-    let validLogin = false;
     if (this.loginForm.valid) {
       switch(this.logintype) {
-        case 1: // Employee and Card Number
-          if (await this.checkEmployeeIDExists(this.loginForm.controls.employeeID.value) && await this.checkCardNumberExists(this.loginForm.controls.cardNumber.value)) {
-            validLogin = true;
-          }
+        case 1: // Employee and Card Number INCOMPLETE
+          await this.compareEmployeeStatuses(this.getEmployeeIDStatus(this.loginForm.controls.employeeID.value), this.getCardNumberStatus(this.loginForm.controls.cardNumber.value));
+          this._jantekService.employeeStatus = await this.getCardNumberStatus(this.loginForm.controls.cardNumber.value);
           break;
         case 2: // Employee ID Only
-          if (await this.checkEmployeeIDExists(this.loginForm.controls.employeeID.value)) {
-            validLogin = true;
-          }
+          this._jantekService.employeeStatus = await this.getEmployeeIDStatus(this.loginForm.controls.employeeID.value);
           break;
         case 3: // Card Number Only
-          if (await this.checkCardNumberExists(this.loginForm.controls.cardNumber.value)) {
-            validLogin = true;
-          }
+          this._jantekService.employeeStatus = await this.getCardNumberStatus(this.loginForm.controls.cardNumber.value);
           break;
       }
     }
-    if (validLogin) {
+    // If Valid Login enable features and reroute to punch-screen
+    if (this.validLogin) {
       this._jantekService.login();
       this.router.navigate(["punch-screen"]);
     } else {
