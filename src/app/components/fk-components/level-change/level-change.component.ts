@@ -262,7 +262,6 @@ export class LevelChangeComponent implements OnInit{
       this._jantekService.checkL3CodeExists(+code).subscribe(
         data => {
           if (data["found"] > 0) {
-            console.log(data["found"]);
             resolve(true);
           } else {
             resolve(false);
@@ -276,24 +275,17 @@ export class LevelChangeComponent implements OnInit{
     });
   }
 
-  async checkMsg1LevelCode(levelCode: any) {
-    levelCode = levelCode.value
-    // Send valid or invalid code message based on L1CodeExists
-    try {
-      const exists = await this.checkL1CodeExists(levelCode);
-      console.log('L1 code exists:', exists);
-    } catch (error) {
-      console.error('Error occurred:', error);
-    }
-  }
-
   /** Checks if all level codes are valid to JantekService */
   async onSubmit(): Promise<void> {
     let allLevelCodesExist = false
     if (this.levelChangeForm.valid) {
       switch(this.fk.fktype) {
         case 4: { // Swipe-and-go w/ L3 change INCOMPLETE
-
+          if (await this.checkL3CodeExists(this.levelChangeForm.controls.msg1Input.value)) {
+            allLevelCodesExist = true;
+          } else {
+            allLevelCodesExist = false;
+          }
           break;
         }
         case 5: { // L1 change
@@ -358,12 +350,14 @@ export class LevelChangeComponent implements OnInit{
       }
     }
     if (allLevelCodesExist) {
-      this.submitLeveChange();
+      this.postPunch();
+    } else {
+      this._jantekService.invalidLevel();
     }
   }
 
   /** Submits level change update to JantekService */
-  submitLeveChange(): void {
-    this._jantekService.levelChangeUpdate(this.levelChangeForm.value);
+  postPunch(): void {
+    this._jantekService.postPunch(this.levelChangeForm.value);
   }
 }

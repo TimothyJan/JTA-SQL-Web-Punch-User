@@ -54,7 +54,7 @@ export class PunchScreenComponent implements OnInit{
     this.currentDateTime = new Date();
     this.punchForm.controls['currentDateTime'].setValue(this.currentDateTime);
     if (this.punchForm.valid) {
-      this._jantekService.punch(this.punchForm.value);
+      this._jantekService.postPunch(this.punchForm.value);
     }
   }
 
@@ -63,7 +63,7 @@ export class PunchScreenComponent implements OnInit{
     this.currentDateTime = new Date();
     this.punchForm.controls['currentDateTime'].setValue(this.currentDateTime);
     if (this.punchForm.valid) {
-      this._jantekService.punch(this.punchForm.value);
+      this._jantekService.postPunch(this.punchForm.value);
     }
   }
 
@@ -72,7 +72,7 @@ export class PunchScreenComponent implements OnInit{
     this.currentDateTime = new Date();
     this.punchForm.controls['currentDateTime'].setValue(this.currentDateTime);
     if (this.punchForm.valid) {
-      this._jantekService.punch(this.punchForm.value);
+      this._jantekService.postPunch(this.punchForm.value);
     }
   }
 }

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AlertService } from './alert.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, catchError, first, tap } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { PunchConfig } from '../models/punch-config';
 import { FunctionKey } from '../models/function-key';
 import { CompanyInfo } from '../models/company-info';
 import { CodeList } from '../models/code-list';
-import { CodeStatus } from '../models/code-status';
+import { CodeStatus, L3CodeStatus } from '../models/code-status';
 import { EmployeeStatus } from '../models/employee-status';
 
 const apiRoot = "http://201.12.20.40/timothy_jan/sqlwebpunch";
@@ -36,7 +36,7 @@ export class JantekService {
 
   punchConfiguration: PunchConfig = {
     status: "OK",
-    logintype: 1,
+    logintype: 3,
     clocktype: 1,
     checklo: 0,
     closetable: 2,
@@ -96,7 +96,7 @@ export class JantekService {
 
   // punchConfiguration: PunchConfig = {
   //   "status": "OK",
-  //   "logintype": 1,
+  //   "logintype": 2,
   //   "clocktype": 1,
   //   "checklo": 0,
   //   "closetable": 2,
@@ -174,7 +174,7 @@ export class JantekService {
   // getPunchConfiguration() : Observable<PunchConfig> {
   //   const options = {
   //     params: {
-  //       Company: "TIMOTHYPROJECT",
+  //       Company: "TIMOTHYJANPROJECT",
   //     }
   //   };
   //   return this.http.get<PunchConfig>(`${apiRoot}/swp_getpunchcfg.asp`, options);
@@ -193,7 +193,7 @@ export class JantekService {
   getEmployeeIDStatus(employeeID: number): Observable<EmployeeStatus> {
     const options = {
       params: {
-        Company: "TIMOTHYPROJECT",
+        Company: "TIMOTHYJANPROJECT",
         EmpID:employeeID,
       }
     };
@@ -204,7 +204,7 @@ export class JantekService {
   getCardNumberStatus(cardNumber: number): Observable<EmployeeStatus> {
     const options = {
       params: {
-        Company: "TIMOTHYPROJECT",
+        Company: "TIMOTHYJANPROJECT",
         cardnum: cardNumber,
       }
     };
@@ -234,7 +234,7 @@ export class JantekService {
   getCompanyInfo(): Observable<CompanyInfo> {
     const options = {
       params: {
-        Company: "TIMOTHYPROJECT",
+        Company: "TIMOTHYJANPROJECT",
       }
     };
     return this.http.get<CompanyInfo>(`${apiRoot}/swp_getinfo.asp`, options)
@@ -321,17 +321,11 @@ export class JantekService {
     }
   }
 
-  /** Punch In/Out/SwipeAndGo */
-  punch(form: any) {
-    console.log(form);
-    this._alertService.openSnackBar("Punch Recorded!");
-  }
-
   /** Https request to get list of level 1 codes */
   getLevel1Codes(): Observable<CodeList> {
     const options = {
       params: {
-        Company: "TIMOTHYPROJECT",
+        Company: "TIMOTHYJANPROJECT",
         order:1,
         startloc:1,
         listsize:100
@@ -344,7 +338,7 @@ export class JantekService {
   getLevel2Codes(): Observable<CodeList> {
     const options = {
       params: {
-        Company: "TIMOTHYPROJECT",
+        Company: "TIMOTHYJANPROJECT",
         order:1,
         startloc:1,
         listsize:100
@@ -357,7 +351,7 @@ export class JantekService {
   getLevel3Codes(): Observable<CodeList> {
     const options = {
       params: {
-        Company: "TIMOTHYPROJECT",
+        Company: "TIMOTHYJANPROJECT",
         order:1,
         startloc:1,
         listsize:100
@@ -370,7 +364,7 @@ export class JantekService {
   checkL1CodeExists(code:number): Observable<CodeStatus> {
     const options = {
       params: {
-        Company: "TIMOTHYPROJECT",
+        Company: "TIMOTHYJANPROJECT",
         l1code:code,
       }
     };
@@ -381,7 +375,7 @@ export class JantekService {
   checkL2CodeExists(code:number): Observable<CodeStatus> {
     const options = {
       params: {
-        Company: "TIMOTHYPROJECT",
+        Company: "TIMOTHYJANPROJECT",
         l2code:code,
       }
     };
@@ -391,19 +385,20 @@ export class JantekService {
   /** Check if L3 code exists
    * INCOMPLETE
   */
-  checkL3CodeExists(code:number): Observable<CodeStatus> {
+  checkL3CodeExists(code:number): Observable<L3CodeStatus> {
     const options = {
       params: {
-        Company: "TIMOTHYPROJECT",
+        Company: "TIMOTHYJANPROJECT",
+        empid: this.employeeStatus.empid,
         l3code:code,
       }
     };
-    return this.http.get<CodeStatus>(`${apiRoot}/swp_chkL3.asp`, options);
+    return this.http.get<L3CodeStatus>(`${apiRoot}/swp_chkL3.asp`, options);
   }
 
-  levelChangeUpdate(form: any) {
-    console.log(form);
-    this._alertService.openSnackBar("Level Change Recorded!");
+  /** Invalid level change */
+  invalidLevel(): void {
+    this._alertService.openSnackBar("Invalid Level Change!");
   }
 
   /** Https request to get list of pay codes */
@@ -413,7 +408,7 @@ export class JantekService {
       case 16: {
         const options = {
           params: {
-            Company: "TIMOTHYPROJECT",
+            Company: "TIMOTHYJANPROJECT",
             pctype: "HNC",
             order:1,
             startloc:1,
@@ -426,7 +421,7 @@ export class JantekService {
       case 17: {
         const options = {
           params: {
-            Company: "TIMOTHYPROJECT",
+            Company: "TIMOTHYJANPROJECT",
             pctype: "ED",
             order:1,
             startloc:1,
@@ -439,7 +434,7 @@ export class JantekService {
       case 20: {
         const options = {
           params: {
-            Company: "TIMOTHYPROJECT",
+            Company: "TIMOTHYJANPROJECT",
             pctype: "HC",
             order:1,
             startloc:1,
@@ -455,9 +450,10 @@ export class JantekService {
     }
   }
 
-  payCodeUpdate(form: any) {
+  /** Valid level change */
+  postPunch(form: any) {
     console.log(form);
-    this._alertService.openSnackBar("Pay Code Update Recorded!");
+    this._alertService.openSnackBar("Punch Recorded!");
   }
 
 }

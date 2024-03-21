@@ -76,7 +76,7 @@ export class HourAmountPcComponent implements OnInit{
   /** Submits pay code update to JantekService */
   onSubmit(): void {
     if (this.payCodeForm.valid) {
-      this._jantekService.levelChangeUpdate(this.payCodeForm.value);
+      this._jantekService.postPunch(this.payCodeForm.value);
     }
   }
 }

@@ -3,3 +3,7 @@ export interface CodeStatus {
   l1code: number,
   found: number
 }
+
+export interface L3CodeStatus extends CodeStatus {
+  empid: string
+}
